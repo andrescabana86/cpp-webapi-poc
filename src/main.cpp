@@ -32,6 +32,9 @@ void sendScript(crow::response &res, std::string filename) {
     sendFile(res, "script/" + filename, "text/javascript");
 }
 
+void sendComponent(crow::response &res, std::string filename) {
+    sendFile(res, "script/component/" + filename, "text/javascript");
+}
 
 void sendStyle(crow::response &res, std::string filename) {
     sendFile(res, "style/" + filename, "text/css");
@@ -51,6 +54,10 @@ int main() {
     CROW_ROUTE(app, "/script/<string>")
             ([](const crow::request &req, crow::response &res, std::string filename) {
                 sendScript(res, filename);
+            });
+    CROW_ROUTE(app, "/component/<string>")
+            ([](const crow::request &req, crow::response &res, std::string filename) {
+                sendComponent(res, filename);
             });
     CROW_ROUTE(app, "/image/<string>")
             ([](const crow::request &req, crow::response &res, std::string filename) {
