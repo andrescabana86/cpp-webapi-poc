@@ -2,6 +2,8 @@
 // Created by andrescabana86 on 8/3/2023.
 //
 #include "crow_all.h"
+#include <unistd.h>
+#include <iostream>
 
 void sendFile(crow::response &res, std::string filename, std::string contentType) {
     std::ifstream in("../public/" + filename, std::ifstream::in);
@@ -42,6 +44,10 @@ void sendStyle(crow::response &res, std::string filename) {
 
 int main() {
     crow::SimpleApp app;
+    char cwd[1024];
+    if (getcwd(cwd, sizeof(cwd)) != nullptr) {
+        std::cout << "current directory => " << cwd << std::endl;
+    }
 
     CROW_ROUTE(app, "/")
             ([](const crow::request &req, crow::response &res) {
@@ -65,7 +71,7 @@ int main() {
             });
 
     char* port = getenv("PORT");
-    uint16_t iPort = static_cast<uint16_t>(port != NULL ? std::stoi(port) : 18080);
+    uint16_t iPort = static_cast<uint16_t>(port != NULL ? std::stoi(port) : 8080);
     std::cout << "PORT = " << iPort << std::endl;
     app.port(iPort).multithreaded().run();
 
