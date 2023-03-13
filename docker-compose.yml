@@ -9,7 +9,7 @@ services:
     depends_on:
       - mongo_db
   mongo_db:
-    image: mongo
+    image: mongo:6.0.4
     volumes:
       - ./database:/data/db
     ports:
