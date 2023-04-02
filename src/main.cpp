@@ -1,9 +1,15 @@
-//
 // Created by andrescabana86 on 8/3/2023.
-//
 #include "crow_all.h"
+#include <fstream>
 #include <unistd.h>
 #include <iostream>
+#include <vector>
+#include <cstdlib>
+#include <boost/filesystem.hpp>
+#include <mongocxx/client.hpp>
+#include <mongocxx/stdx.hpp>
+#include <mongocxx/uri.hpp>
+#include <mongocxx/instance.hpp>
 
 void sendFile(crow::response &res, std::string filename, std::string contentType) {
     std::ifstream in("../public/" + filename, std::ifstream::in);

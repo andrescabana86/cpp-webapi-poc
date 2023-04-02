@@ -1,13 +1,14 @@
 version: '3'
 services:
-  webapi:
+  webapi_dev:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: ./docker/libboost-mongo.Dockerfile
     ports:
       - "8080:8080"
-    depends_on:
-      - mongo_db
+    volumes:
+      - ./src:/app
+    network_mode: bridge
   mongo_db:
     image: mongo:6.0.4
     volumes:

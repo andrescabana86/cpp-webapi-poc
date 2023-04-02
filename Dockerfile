@@ -1,4 +1,4 @@
-FROM andrescabana86/libboost-base:latest
+FROM andrescabana86/libboost-mongo:latest
 
 # at /app
 WORKDIR /app
@@ -11,4 +11,5 @@ RUN g++ -o src/build/webapi src/main.cpp
 
 # Set the command to run the executable
 WORKDIR /app/src/build
+
 CMD ["./webapi"]
