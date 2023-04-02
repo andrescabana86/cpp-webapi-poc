@@ -1,11 +1,48 @@
 FROM ubuntu:23.04
 LABEL maintainer="andrescabana86 <andrescabana86@gmail.com>"
 
-RUN apt-get -y update
-RUN apt-get -y upgrade
-RUN apt-get -y install libz-dev libssl-dev libcurl4-gnutls-dev libexpat1-dev gettext cmake gcc build-essential libboost-all-dev
-RUN apt-get -y install libtcmalloc-minimal4 \
-    && ln -s /usr/lib/libtcmalloc_minimal.so.4 /usr/lib/libtcmalloc_minimal.so
+# to update the image in dockerfile
+# Before pushing the image to Docker Hub, you need to tag your image with a Docker Hub repository name, for example:
+## docker tag [IMAGE_ID]:[TAG] andrescabana86/libboost-mongo:[TAG]
+## docker push andrescabana86/libboost-mongo:[TAG]
+
+ENV LC_ALL en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
+
+# Install necessary dependencies
+RUN apt-get -y update  \
+    && apt-get -y upgrade \
+    && apt-get install -y --no-install-recommends \
+        libz-dev \
+        libssl-dev \
+        libcurl4-gnutls-dev \
+        libexpat1-dev \
+        gettext \
+        cmake \
+        gcc \
+        build-essential \
+        libboost-all-dev \
+        libtcmalloc-minimal4 \
+        autoconf \
+        automake \
+        libtool \
+        pkg-config \
+        apt-transport-https \
+        ca-certificates \
+        software-properties-common \
+        wget \
+        curl \
+        gnupg \
+        zlib1g-dev \
+        swig \
+        vim \
+        gdb \
+        valgrind \
+        locales \
+        locales-all \
+    && ln -s /usr/lib/libtcmalloc_minimal.so.4 /usr/lib/libtcmalloc_minimal.so \
+    && apt-get clean
 
 WORKDIR /tmp
 
@@ -35,3 +72,5 @@ RUN git clone https://github.com/mongodb/mongo-cxx-driver.git \
 -DLIBBSON_DIR=/usr/lib/x86_64-linux-gnu \
 -DCMAKE_MODULE_PATH=/usr/src/mongo-cxx-driver-r3.7.0/cmake .. \
 && make EP_mnmlstc_core && make && make install && ldconfig /usr
+
+WORKDIR /app
