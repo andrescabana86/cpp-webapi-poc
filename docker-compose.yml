@@ -3,7 +3,7 @@ services:
   webapi_dev:
     build:
       context: .
-      dockerfile: ./docker/libboost-mongo.Dockerfile
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
     volumes:
